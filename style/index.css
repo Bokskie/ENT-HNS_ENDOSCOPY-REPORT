@@ -1,0 +1,1079 @@
+:root {
+    /* Modern Sky Blue Palette */
+    --primary-color: #0ea5e9; 
+    --primary-hover-color: #0284c7;
+    --secondary-color: #64748b; /* Slate Gray */
+    --secondary-hover-color: #475569;
+    --danger-color: #e74c3c;
+    --success-color: #27ae60;
+
+    /* Light Theme */
+    --bg-color: #f1f5f9; /* Softer gray background */
+    --text-color: #1e293b; /* Darker slate for better readability */
+    --secondary-text-color: #64748b;
+    --header-bg-color: var(--primary-color);
+    --header-text-color: white;
+    --panel-bg-color: #fff;
+    --panel-dashed-border-color: #ccc;
+    --border-color: #e2e8f0;
+    --input-bg-color: #f8fafc; /* Very light gray for inputs */
+    --input-border-color: #cbd5e1;
+    --legend-color: var(--primary-color);
+    --main-content-header-color: #2c3e50;
+
+    /* Modern Shadows */
+    --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --input-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Global Box Sizing Reset - Prevents padding from breaking layouts */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body.dark-mode {
+    /* Dark Theme */
+    --bg-color: #0f172a; /* Slate 900 */
+    --text-color: #f1f5f9;
+    --secondary-text-color: #94a3b8;
+    --header-bg-color: #1e293b;
+    --header-text-color: white;
+    --panel-bg-color: #1e293b; /* Slate 800 */
+    --panel-dashed-border-color: #334155;
+    --border-color: #334155;
+    --input-bg-color: #334155;
+    --input-border-color: #475569;
+    --legend-color: var(--primary-color);
+    --main-content-header-color: #ecf0f1;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 10px;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: center; /* Center align content by default */
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover-color));
+    color: var(--header-text-color);
+    padding: 20px;
+    text-align: center;
+    border-bottom: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin: -10px -10px 20px -10px;
+}
+
+.header-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-content h1 {
+    margin: 0;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* Dark Mode Toggle Switch */
+.theme-switch-wrapper {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Online/Offline Indicator */
+.connection-status {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    margin-left: 15px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: help;
+}
+.connection-status:hover {
+    transform: scale(1.2);
+}
+.connection-status.online { background-color: #2ecc71; } /* Green */
+.connection-status.offline { background-color: #e74c3c; } /* Red */
+
+/* Syncing Animation */
+@keyframes pulse-sync {
+    0% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7); }
+    70% { box-shadow: 0 0 0 6px rgba(52, 152, 219, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
+}
+
+.connection-status.syncing {
+    background-color: #3498db; /* Blue */
+    animation: pulse-sync 1.5s infinite;
+}
+
+/* Install App Button */
+#installAppBtn {
+    background-color: white;
+    color: var(--primary-color);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    font-size: 13px;
+    display: none; /* Hidden by default, shown via JS */
+    align-items: center;
+    gap: 5px;
+}
+#installAppBtn:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-1px);
+}
+
+.search-results-list {
+    margin-top: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--panel-bg-color);
+}
+
+.search-result-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+.search-result-item small {
+    color: var(--secondary-text-color);
+}
+.search-result-item .result-actions {
+    display: flex;
+    gap: 10px;
+}
+.search-result-item .result-actions button {
+    padding: 5px 10px;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* New Card Layout for index.html */
+.card-section {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: var(--panel-bg-color);
+    border-radius: 16px; /* More rounded */
+    box-shadow: var(--card-shadow); /* Softer shadow */
+    border: none; /* Cleaner look without border */
+}
+
+.card-section h2 {
+    font-size: 1.8em;
+    color: var(--main-content-header-color);
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+}
+
+.card-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.card {
+    flex: 1;
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: var(--input-shadow);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow);
+}
+
+.card h3 {
+    margin: 0 0 10px 0;
+    color: var(--primary-color);
+    font-size: 1.4em;
+}
+
+.card p {
+    margin: 0;
+    color: var(--secondary-text-color);
+}
+
+
+
+.report-header {
+    display: flex; /* Make it a Flex Container */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    gap: 20px; /* Add space between logo and text */
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary-color);
+    margin-bottom: 20px;
+    text-align: center; /* Can be removed, but safer to keep */
+    position: relative;
+}
+.report-header .logo {
+    width: 120px;
+    height: 120px;
+    margin: 0;
+    
+    /* Add body background color to prevent transparency issues on some image formats */
+    background-color: var(--bg-color); 
+    object-fit: cover; /* Ensure image is not stretched */
+    
+    /* Drop-shadow filter is not needed here */
+    /* filter: drop-shadow(0 0 0 transparent); */
+    border-radius: 50%; /* Make it a circle */
+}
+
+.report-header h1 {
+    color: var(--main-content-header-color);
+    margin: 0;
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: 20px auto;
+    text-align: left; /* Reset text-align for report pages */
+}
+
+/* Layout for Form and Image Panel */
+.report-layout {
+    display: flex;
+    gap: 30px;
+}
+
+.form-panel { 
+    flex: 1; /* Let it take the remaining space */
+} 
+
+.image-panel {
+    width: 300px;
+    flex-shrink: 0; /* Prevent it from shrinking */
+    border: none;
+    border-radius: 16px;
+    padding: 20px;
+    background-color: var(--panel-bg-color);
+    box-shadow: var(--card-shadow);
+    height: fit-content;
+}
+/* Grid layout for image previews */
+.image-preview {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+/* Container for each preview image to maintain aspect ratio */
+.image-preview > div {
+    position: relative;
+    width: 100%;
+    padding-top: 100%; /* Creates a square aspect ratio */
+    cursor: grab;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.image-preview > div:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 5;
+}
+
+.image-preview > div:active {
+    cursor: grabbing;
+}
+
+.image-preview img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image fills the square */
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+/* Ensure file input is clickable and takes full width */
+input[type="file"] {
+    display: block;
+    width: 100%;
+    cursor: pointer;
+}
+
+/* Styling for File Input Button */
+input[type="file"]::file-selector-button {
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: none;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover-color));
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+/* Style for disabled file input */
+input[type="file"]:disabled {
+    cursor: not-allowed;
+}
+
+input[type="file"]:disabled::file-selector-button {
+    background: linear-gradient(135deg, #bdc3c7, #95a5a6);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Style for drag-over effect */
+.drag-over {
+    border: 2px dashed var(--primary-color) !important;
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+/* Generic Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--panel-bg-color);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 90vw;
+    max-height: 90vh;
+    text-align: center;
+}
+
+/* Loading Spinner */
+.spinner {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid var(--primary-color); /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Form Elements Styling */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--secondary-text-color);
+}
+
+fieldset {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+legend {
+    font-weight: bold;
+    color: var(--legend-color);
+    padding: 0 10px;
+}
+
+input[type="text"], input[type="number"], input[type="date"], select, textarea {
+    width: 100%;
+    padding: 12px 16px; /* More breathing room */
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px; /* Rounded inputs */
+    box-sizing: border-box;
+    margin-bottom: 15px; /* Added space below each input */
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--input-shadow);
+}
+
+/* Modern Focus State */
+input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus, textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15); /* Soft glow effect matching new primary */
+    background-color: var(--panel-bg-color);
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Custom Checkbox & Radio Styling for better visibility and clickability */
+input[type="checkbox"],
+input[type="radio"] {
+    transform: scale(1.4); /* Make control bigger */
+    margin: 0 5px 0 8px;   /* Adjust spacing around the larger control */
+    vertical-align: middle; /* Better align with text */
+    cursor: pointer;
+    accent-color: var(--primary-color); /* Modern way to color the checkmark/dot */
+}
+
+/* Findings Table (NEW STRUCTURE) */
+.findings-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.findings-table th {
+    font-weight: bold;
+    color: #34495e;
+    padding: 8px 15px;
+    border-bottom: 2px solid #eee;
+    text-align: left;
+}
+
+.findings-table td {
+    padding: 5px 0;
+    vertical-align: middle;
+}
+
+.findings-table .structure-label {
+    font-weight: 600;
+    color: var(--secondary-text-color);
+    padding-right: 15px;
+}
+
+.findings-table td input[type="text"],
+.findings-table td select {
+    margin-bottom: 0; /* Remove margin-bottom inside table cell */
+}
+
+.findings-table tr:nth-child(even) {
+    background-color: rgba(0,0,0,0.05);
+}
+
+
+/* Action Buttons */
+.actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.actions button, button {
+    padding: 12px 24px;
+    margin: 0;
+    border: none;
+    border-radius: 12px; /* Rounded buttons */
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover-color));
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 140px;
+}
+
+.actions button:hover, button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.4);
+}
+
+.actions button:active, button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(14, 165, 233, 0.2);
+}
+
+/* Secondary Buttons (Grey) */
+.btn-secondary {
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-hover-color)) !important;
+    box-shadow: 0 4px 6px rgba(127, 140, 141, 0.25) !important;
+}
+.btn-secondary:hover {
+    box-shadow: 0 7px 14px rgba(127, 140, 141, 0.3) !important;
+}
+
+/* Back to Menu Button Style */
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-hover-color));
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 6px rgba(127, 140, 141, 0.25);
+}
+.back-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 14px rgba(127, 140, 141, 0.3);
+}
+
+/* Danger Buttons (Red) */
+.btn-danger {
+    background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+    box-shadow: 0 4px 6px rgba(231, 76, 60, 0.25) !important;
+}
+.btn-danger:hover {
+    box-shadow: 0 7px 14px rgba(231, 76, 60, 0.3) !important;
+}
+
+/* Print-specific styles */
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+        color: #000; /* Ensure text is black for printing */
+    }
+    .no-print {
+        display: none !important;
+    }
+    #printDiv {
+        display: block !important;
+        margin: 0;
+    }
+    .print-header-container {
+        display: flex;
+        justify-content: space-between; /* Separate the items */
+        align-items: center;
+        margin-bottom: 0;
+        padding: 0 10px; /* Add some side padding */
+    }
+    .print-logo-side {
+        width: 120px;
+        height: 120px;
+        object-fit: cover; /* Crop as circle and prevent stretching */
+        border-radius: 50%; /* Make it a circle */
+    }
+    .header-text-block {
+        text-align: center;
+        flex-grow: 1; /* Use remaining space */
+        padding: 0 15px; /* Space between text and logos */
+        min-width: 0; /* Allow shrinking in flex container */
+        overflow: hidden; /* Ensure content doesn't force width expansion */
+    }
+    @page {
+        margin: 0.3cm; /* Reduce page margin for more space */
+    }
+
+    .image-print-container {
+        margin-top: 0;
+    }
+
+    .doctor-signature-section {
+        margin-top: 5px; /* Reduce space above signature */
+        page-break-inside: avoid;
+    }
+}
+
+/* Sticky Header Preview in Settings */
+.sticky-header-preview {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--panel-bg-color);
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+    margin: -20px -20px 20px -20px; /* Counteract card padding to go full width */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Tutorial Mode Styles */
+.tutorial-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    display: none;
+}
+
+.tutorial-active-element {
+    position: relative;
+    z-index: 10000 !important;
+    box-shadow: 0 0 0 4px #fff, 0 0 15px rgba(0,0,0,0.5) !important;
+    pointer-events: none; /* Prevent clicking while in tutorial */
+    transition: all 0.3s ease;
+}
+
+.tutorial-tooltip {
+    position: absolute;
+    background-color: white;
+    color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    width: 280px;
+    z-index: 10001;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+    font-size: 14px;
+    line-height: 1.5;
+    display: none;
+    text-align: left;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.tutorial-tooltip h4 {
+    margin-top: 0;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 16px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+.tutorial-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.tutorial-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: auto;
+}
+
+.tutorial-next {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover-color));
+    color: white;
+}
+
+.tutorial-skip {
+    background: transparent;
+    color: #777;
+    border: 1px solid #ddd;
+}
+.tutorial-skip:hover {
+    background: #f5f5f5;
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS (Add this at the end)
+   ========================================= */
+@media (max-width: 768px) {
+    /* Stack the main report layout (Form on top, Images below) */
+    .report-layout {
+        flex-direction: column;
+    }
+
+    .image-panel {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Adjust Header for Mobile */
+    .report-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .report-header h1 {
+        font-size: 1.5em;
+    }
+
+    .report-header .logo {
+        width: 80px;
+        height: 80px;
+    }
+
+    /* Stack Action Buttons */
+    .actions {
+        flex-direction: column;
+        padding: 0 20px;
+    }
+
+    .actions button {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    /* Adjust Card Container on Index Page */
+    .card-container {
+        flex-direction: column;
+    }
+
+    /* Adjust Modal Widths */
+    .modal-content {
+        width: 95% !important;
+        max-width: 95% !important;
+        padding: 15px;
+    }
+}
+
+/* Update Toast Notification */
+.update-toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 10005;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 300px;
+    animation: slideUp 0.3s ease-out;
+}
+
+.update-toast .toast-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+}
+
+.update-toast button {
+    padding: 6px 12px;
+    font-size: 12px;
+    min-width: auto;
+}
+
+@keyframes slideUp {
+    from { transform: translate(-50%, 100%); opacity: 0; }
+    to { transform: translate(-50%, 0); opacity: 1; }
+}
+
+/* =========================================
+   NEW BUTTON DESIGNS
+   ========================================= */
+
+/* Custom File Input (Attach Image) */
+.hidden-file-input {
+    display: none !important;
+}
+
+.custom-file-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: white;
+    color: var(--primary-color);
+    border-radius: 12px;
+    border: 2px solid var(--primary-color);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: none;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.custom-file-label:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
+    background: var(--primary-color);
+    color: white;
+}
+
+.custom-file-label:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+}
+
+/* Video to Image Button */
+.btn-video-to-image {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px !important;
+    background: linear-gradient(135deg, #17a2b8, #138496) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    width: 100% !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    box-shadow: 0 4px 6px rgba(23, 162, 184, 0.25) !important;
+    margin-top: 0 !important;
+    margin-bottom: 10px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-video-to-image:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 14px rgba(23, 162, 184, 0.3) !important;
+    background: linear-gradient(135deg, #138496, #117a8b) !important;
+}
+
+/* Remove Image Button (X) */
+.btn-remove-image {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+    z-index: 10;
+    padding: 0;
+    line-height: 1;
+}
+
+.btn-remove-image:hover {
+    transform: scale(1.1);
+    background: #c0392b;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+}
+
+/*  overflow: visible !important;
+}
+
+/* Clear Images Button */
+.btn-clear-images {
+    width: auto;
+    max-width: 100%;
+    margin: 0 auto 10px auto;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+    display: none; /* Hidden by default */
+}
+
+.btn-clear-images:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transform: translateY(-1px);
+}
+
+@keyframes pulse-green {
+    0% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(39, 174, 96, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); }
+}
+
+/* Set All Normal Button (Outline Style) */
+.btn-set-normal {
+    background: transparent !important;
+    border: 1px solid var(--success-color) !important;
+    color: var(--success-color) !important;
+    box-shadow: none !important;
+    /* Make it small and float right to be less intrusive */
+    float: right;
+    margin-top: -5px; /* Pull it up to align with the legend text */
+    margin-bottom: 10px !important;
+    padding: 4px 10px !important;
+    font-size: 11px !important;
+    min-width: auto !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    gap: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    animation: pulse-green 2s infinite;
+}
+.btn-set-normal:hover {
+    background: var(--success-color) !important;
+    color: white !important;
+    transform: translateY(-1px);
+    animation: none;
+}
+
+/* Storage Meter Styles */
+.storage-meter-container {
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    height: 12px; /* Slimmer bar */
+    width: 100%;
+    overflow: hidden;
+    margin-top: 5px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.storage-meter-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success-color), var(--primary-color));
+    width: 0%;
+    transition: width 0.5s ease-in-out, background-color 0.3s;
+    border-radius: 10px;
+}
+
+.storage-meter-fill.warning { background: #f39c12; }
+.storage-meter-fill.danger { background: #e74c3c; }
+
+/* PDF Preview Modal Specific Styles */
+#pdfPreviewModal .modal-content {
+    width: 95vw;
+    height: 90vh;
+    max-width: 1200px;
+    max-height: 95vh;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#pdfPreviewFrame {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: #525659;
+}
+
+#pdfPreviewModal .actions {
+    padding: 15px;
+    margin: 0;
+    background-color: var(--panel-bg-color);
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
+}

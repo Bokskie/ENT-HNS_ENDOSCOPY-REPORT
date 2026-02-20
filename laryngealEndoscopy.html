@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>Laryngeal Endoscopy Report</title>
+    <link rel="icon" href="image/ent-logo.webp">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/lib/cropper.min.css" />
+    <link rel="stylesheet" href="./style/index.css">
+</head>
+<body>
+
+    <header class="report-header no-print">
+        <img id="headerLeftLogo" src="image/rmci-logo.png" alt="Left Logo" class="logo" onerror="this.style.display='none'; console.error('Header Logo failed to load:', this.src);">
+        <h1>Laryngeal Endoscopy Report</h1>
+        <img id="headerRightLogo" src="image/ent-logo.webp" alt="Right Logo" class="logo" onerror="this.style.display='none'; console.error('Header Logo failed to load:', this.src);">
+        <div id="connectionStatus" class="connection-status online" title="Checking connection..."></div>
+        <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="theme-toggle">
+                <input type="checkbox" id="theme-toggle" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="actions no-print back-link-container">
+            <a href="index.html" class="back-button">← Back to Menu</a>
+        </div>
+
+        <div class="report-layout no-print">
+            <div class="form-panel">
+                <form id="report-form">
+                    <div class="form-group">
+                        <fieldset class="patient-info-fieldset">
+                            <legend>Patient Information</legend>
+                            <label for="patientName" class="form-label">Patient Name</label>
+                            <input id="patientName" name="patientName" type="text" placeholder="e.g., Juan Dela Cruz" required>
+        
+                            <label for="patientAge" class="form-label">Age</label>
+                            <input id="patientAge" name="patientAge" type="number" min="0" placeholder="e.g., 35">
+        
+                            <label for="patientSex" class="form-label">Sex / Gender</label>
+                            <select id="patientSex" name="patientSex">
+                                <option value="">Select</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+        
+                            <label for="medicalRecordNo" class="form-label">Medical Record No.</label>
+                            <input id="medicalRecordNo" name="medicalRecordNo" type="text" placeholder="Optional">
+
+                        </fieldset>
+                    </div>
+
+                    <div class="form-group">
+                        <fieldset class="procedure-details-fieldset">
+                            <legend>Procedure Details</legend>
+                            <label for="endoscopyType" class="form-label">Type of Endoscopy</label>
+                            <select id="endoscopyType" name="endoscopyType">
+                                <option value="">Select</option>
+                                <option value="70° Rigid Endoscope">70° Rigid Endoscope</option>
+                                <option value="90° Rigid Endoscope">90° Rigid Endoscope</option>
+                                <option value="Flexible Fiberoptic Scope">Flexible Fiberoptic Scope</option>
+                                <option value="Video Laryngoscopy">Video Laryngoscopy</option>
+                            </select>
+
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                                <label for="procedureDescription" class="form-label" style="margin-bottom: 0;">Procedure Description</label>
+                                <button type="button" id="resetProcedureDescBtn" style="background: transparent; border: none; color: var(--primary-color); cursor: pointer; font-size: 12px; padding: 0; min-width: auto; box-shadow: none; height: auto; text-transform: none; letter-spacing: normal;">↺ Reset to Default</button>
+                            </div>
+                            <textarea id="procedureDescription" name="procedureDescription" rows="12"></textarea>
+
+                            <label for="procedureDate" class="form-label">Procedure Date</label>
+                            <input type="date" id="procedureDate" name="procedureDate">
+        
+                            <label for="indication" class="form-label">Indication / Reason for Procedure</label>
+                            <input type="text" id="indication" name="indication" list="indication-list-laryngeal" placeholder="e.g., Hoarseness, Chronic cough, Dysphagia">
+                            <datalist id="indication-list-laryngeal">
+                                <option value="Hoarseness"></option>
+                                <option value="Chronic cough"></option>
+                                <option value="Dysphagia"></option>
+                                <option value="Globus sensation"></option>
+                                <option value="Throat clearing"></option>
+                                <option value="Sore throat"></option>
+                            </datalist>
+        
+                            <label for="anesthesiaUsed" class="form-label">Anesthesia Used</label>
+                            <select id="anesthesiaUsed" name="anesthesiaUsed">
+                                <option value="">Select</option>
+                                <option value="Topical">Topical</option>
+                                <option value="Local">Local</option>
+                                <option value="None">None</option>
+                            </select>
+                        </fieldset>
+                    </div>
+        
+                    <div class="form-group">
+                        <fieldset class="findings-fieldset">
+                            <legend>Findings</legend>
+                            
+                            <label for="epiglottis" class="form-label">Epiglottis</label>
+                            <select id="epiglottis" name="epiglottis">
+                                <option value="">Select</option>
+                                <option value="Normal" selected>Normal</option>
+                                <option value="Edematous">Edematous</option>
+                                <option value="Erythematous">Erythematous</option>
+                                <option value="Mass">Mass</option>
+                                <option value="Omega-shaped">Omega-shaped</option>
+                            </select>
+
+                            <label for="vallecula" class="form-label">Vallecula</label>
+                            <select id="vallecula" name="vallecula">
+                                <option value="">Select</option>
+                                <option value="Clear" selected>Clear</option>
+                                <option value="Pooling of saliva">Pooling of saliva</option>
+                            </select>
+
+                            <label for="pyriformSinuses" class="form-label">Pyriform Sinuses</label>
+                            <select id="pyriformSinuses" name="pyriformSinuses">
+                                <option value="">Select</option>
+                                <option value="Clear" selected>Clear</option>
+                                <option value="Pooling of saliva">Pooling of saliva</option>
+                                <option value="Mass">Mass</option>
+                            </select>
+
+                            <label for="arytenoids" class="form-label">Arytenoids</label>
+                            <select id="arytenoids" name="arytenoids">
+                                <option value="">Select</option>
+                                <option value="Mobile" selected>Mobile</option>
+                                <option value="Edematous">Edematous</option>
+                                <option value="Erythematous">Erythematous</option>
+                            </select>
+
+                            <label for="falseVocalCords" class="form-label">False Vocal Cords</label>
+                            <select id="falseVocalCords" name="falseVocalCords">
+                                <option value="">Select</option>
+                                <option value="Normal" selected>Normal</option>
+                                <option value="Hypertrophic">Hypertrophic</option>
+                                <option value="Edematous">Edematous</option>
+                                <option value="Erythematous">Erythematous</option>
+                            </select>
+
+                            <label for="trueVocalCords" class="form-label">True Vocal Cords</label>
+                            <input type="text" id="trueVocalCords" name="trueVocalCords" list="tvf-list" placeholder="e.g., Normal, Lesion noted on right">
+                            <datalist id="tvf-list">
+                                <option value="Normal"></option>
+                                <option value="Erythematous"></option>
+                                <option value="Edematous"></option>
+                                <option value="Nodule"></option>
+                                <option value="Polyp"></option>
+                                <option value="Cyst"></option>
+                                <option value="Mass"></option>
+                                <option value="Ulceration"></option>
+                                <option value="Palsy"></option>
+                            </datalist>
+
+                            <label for="vocalCordMobility" class="form-label">Vocal Cord Mobility</label>
+                            <select id="vocalCordMobility" name="vocalCordMobility">
+                                <option value="">Select</option>
+                                <option value="Symmetrical and mobile" selected>Symmetrical and mobile</option>
+                                <option value="Impaired mobility, Right">Impaired mobility, Right</option>
+                                <option value="Impaired mobility, Left">Impaired mobility, Left</option>
+                                <option value="Fixed, Right">Fixed, Right</option>
+                                <option value="Fixed, Left">Fixed, Left</option>
+                            </select>
+
+                            <label for="subglottis" class="form-label">Subglottis</label>
+                            <select id="subglottis" name="subglottis">
+                                <option value="">Select</option>
+                                <option value="Normal" selected>Normal</option>
+                                <option value="Stenosis">Stenosis</option>
+                                <option value="Mass">Mass</option>
+                            </select>
+                        </fieldset>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="impression" class="form-label">Impression / Diagnosis</label>
+                        <input type="text" id="impression" name="impression" list="impression-list-laryngeal" placeholder="e.g., Laryngopharyngeal Reflux (LPR)...">
+                        <datalist id="impression-list-laryngeal">
+                            <option value="Normal Laryngoscopy"></option>
+                            <option value="Laryngopharyngeal Reflux (LPR)"></option>
+                            <option value="Vocal Cord Nodule"></option>
+                            <option value="Vocal Cord Polyp"></option>
+                            <option value="Vocal Cord Paralysis"></option>
+                            <option value="Laryngeal Mass"></option>
+                            <option value="Chronic Laryngitis"></option>
+                        </datalist>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recommendation" class="form-label">Recommendation / Plan</label>
+                        <input type="text" id="recommendation" name="recommendation" list="recommendation-list-laryngeal" placeholder="e.g., Voice rest, Anti-reflux medications...">
+                        <datalist id="recommendation-list-laryngeal">
+                            <option value="Voice rest"></option>
+                            <option value="Anti-reflux medications and lifestyle modification"></option>
+                            <option value="Speech therapy referral"></option>
+                            <option value="Advised biopsy"></option>
+                            <option value="Follow-up as needed"></option>
+                        </datalist>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="physician" class="form-label">Attending Physician:</label>
+                        <select id="physician" name="physician" required>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="image-panel">
+                <div class="form-group">
+                    <label for="imageInput" class="form-label">Attach Endoscopy Images</label>
+                    <input type="file" id="imageInput" multiple accept="image/*">
+                    <button type="button" id="clearImagesBtn" class="btn-clear-images">🗑️ Clear Images</button>
+                    <div id="preview" class="image-preview"></div>
+                </div>
+            </div>
+            
+            </div>
+        </div>
+
+        <div class="actions" id="action-buttons-container">
+            <button type="button" id="printBtn" class="no-print" title="Open a print preview to print the report.">🖨️ Print</button>
+            <button type="button" id="savePdfBtn" class="no-print" title="Save the report as a PDF file.">📄 Save PDF</button>            
+            <button type="button" id="clearFormBtn" class="no-print">❌ Clear Form</button>
+            <button type="button" id="helpBtn" class="no-print">❓ Help</button>
+            <button type="button" id="tutorialBtn" class="no-print">🎓 Tutorial</button>
+        </div>
+
+        <div id="printHeaderTemplate" style="display:none;">
+            <div class="print-header-container" style="display: flex; justify-content: space-between; align-items: center; gap: 15px;">
+                <img src="image/rmci-logo.png" alt="Left Logo" class="print-logo-side" style="width: 120px; height: 120px; object-fit: cover; border-radius: 0;" onerror="this.style.display='none'; console.error('Left Logo failed to load:', this.src);">
+                <div class="header-text-block" style="text-align: center; flex-grow: 1; min-width: 0; overflow: hidden;">
+                </div>
+                <img src="image/ent-logo.webp" alt="Right Logo" class="print-logo-side" style="width: 120px; height: 120px; object-fit: cover; border-radius: 0;" onerror="this.style.display='none'; console.error('Right Logo failed to load:', this.src);">
+            </div>
+            <hr class="print-hr" style="border: 0; border-top: 1px solid #ccc; margin-top: 10px;">
+        </div>
+        <div id="printDiv" style="display:none;"></div>
+    </main>
+
+    <div id="cropModal" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <h2>Crop Image</h2>
+            <div class="img-container" style="max-height: 60vh; margin-bottom: 15px;">
+                <img id="imageToCrop" src="" alt="Image to crop" style="max-width: 100%;">
+            </div>
+            <div class="actions" style="border-top: none; padding-top: 10px;">
+                <button type="button" id="cropButton">Crop & Add</button>
+                <button type="button" id="skipCropButton" style="background-color: var(--secondary-color);">Skip & Add Original</button>
+                <button type="button" id="cancelCropButton">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="helpModal" class="modal-overlay" style="display:none;">
+        <div class="modal-content" style="max-width: 600px; text-align: left;">
+            <h2 style="border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-top: 0;">Button Guide</h2>
+            <div style="margin-top: 15px; line-height: 1.6;">
+                <p><strong>📄 Save PDF:</strong> Generates a PDF version of the report. Use this for printing or sending to patients.</p>
+                <p><strong>🖨️ Print:</strong> Opens the standard print dialog immediately.</p>
+            </div>
+            <div style="text-align: right; margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 15px;">
+                <button id="closeHelpBtn" style="background-color: #7f8c8d;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingSpinner" class="modal-overlay" style="display:none;">
+        <div class="spinner"></div>
+        <p style="color: white; margin-top: 20px; font-size: 1.2em;">Generating PDF...</p>
+    </div>
+
+    <div id="printOptionsModal" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <h2>PDF Options</h2>
+            <div class="form-group" style="text-align: left;">
+                <label for="paperSizeSelect" class="form-label">Paper Size</label>
+                <select id="paperSizeSelect">
+                    <option value="A4" selected>A4</option>
+                    <option value="Letter">Letter</option>
+                    <option value="Legal">Legal</option>
+                </select>
+            </div>
+            <button type="button" id="generatePdfBtn">Generate and Save PDF</button>
+            <button type="button" id="cancelPrintBtn" style="background-color: #7f8c8d;">Cancel</button>
+        </div>
+    </div>
+
+    <div id="pdfPreviewModal" class="modal-overlay" style="display:none;">
+        <div class="modal-content" style="width: 90vw; height: 90vh; max-width: 1200px;">
+            <h2>PDF Preview</h2>
+            <iframe id="pdfPreviewFrame" style="width: 100%; height: 85%; border: 1px solid var(--border-color);"></iframe>
+            <div class="actions" style="border-top: none; padding-top: 10px;">
+                <button type="button" id="savePdfFromPreviewBtn">Save PDF</button>
+                <button type="button" id="closePdfPreviewBtn" style="background-color: #7f8c8d;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="nativePrintPreviewModal" class="modal-overlay" style="display:none;">
+        <div class="modal-content" style="width: 90vw; height: 90vh; max-width: 800px;">
+            <h2>Print Preview</h2>
+            <div id="nativePrintPreviewContent" style="width: 100%; height: 85%; border: 1px solid var(--border-color); overflow-y: auto; background: white; color: black; text-align: left; padding: 15px; box-sizing: border-box;"></div>
+            <div class="actions" style="border-top: none; padding-top: 10px;">
+                <button type="button" id="confirmPrintBtn">Print Now</button>
+                <button type="button" id="closeNativePrintPreviewBtn" style="background-color: #7f8c8d;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="messageModal" class="modal-overlay" style="display:none; z-index: 10001;">
+        <div class="modal-content" style="max-width: 400px; padding: 0; overflow: hidden; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+            <div class="modal-header" style="background: var(--primary-color); color: white; padding: 15px; font-weight: bold; font-size: 1.1em; text-align: left;">
+                <span id="msgModalTitle">Notification</span>
+            </div>
+            <div class="modal-body" style="padding: 25px 20px; color: var(--text-color); font-size: 1.05em;">
+                <p id="msgModalText" style="margin: 0; line-height: 1.5;"></p>
+            </div>
+            <div class="modal-footer" style="padding: 15px; background: var(--bg-color); border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 10px;">
+                <button id="msgModalCancelBtn" style="background: linear-gradient(135deg, #95a5a6, #7f8c8d); display: none;">Cancel</button>
+                <button id="msgModalOkBtn" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-hover-color));">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/lib/jspdf.umd.min.js" defer></script>
+    <script src="js/lib/html2canvas.min.js" defer></script>
+    <script src="js/lib/cropper.min.js" defer></script>
+    <script src="function/index.js" defer></script>
+    
+</body>
+</html>
